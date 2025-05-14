@@ -1,4 +1,4 @@
-📱 Android Kiosk Video Call App
+📱 Android Video Call App
 
 This is a custom-built Android application designed for kiosk devices (landscape tablets) to initiate and receive secure video calls using the Stringee SDK. It features:
 
