@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VideoCall Sample</string>
+    <string name="hint_call_user_id">Call user ID</string>
+    <string name="btn_make_call">Make Call</string>
+    <string name="your_user_id">Your user ID</string>
+
+</resources>
