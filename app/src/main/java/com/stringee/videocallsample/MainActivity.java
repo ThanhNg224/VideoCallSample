@@ -41,13 +41,12 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         tvUserId = findViewById(R.id.tv_userid);
         etTo = findViewById(R.id.et_to);
 
         Button btnMakeCall = findViewById(R.id.btn_make_call);
         btnMakeCall.setOnClickListener(view -> {
-            // 👉 Tự động gọi từ kiosk001 → staff001
+            // gọi từ kiosk001 → staff001
             Intent intent = new Intent(MainActivity.this, OutgoingCallActivity.class);
             String from = client != null ? client.getUserId() : "unknown";
             intent.putExtra("from", from);
@@ -169,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
                 }
             });
         }
-        //put your token here
+        //token
         String token = "eyJjdHkiOiJzdHJpbmdlZS1hcGk7dj0xIiwidHlwIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJTSy4wLlo0Q3dJZmJrdk1SMktnNERsb0ZpQnNsQ0ZpT09Sc0tjLTE3NDcxODYzNzMiLCJpc3MiOiJTSy4wLlo0Q3dJZmJrdk1SMktnNERsb0ZpQnNsQ0ZpT09Sc0tjIiwiZXhwIjoxNzQ5Nzc4MzczLCJ1c2VySWQiOiJraW9zazAwMSIsImljY19hcGkiOnRydWV9.NZEwnFJxLW5JNupg6kedUA-6UNsSf0lkUVAhtBms7Cs";
         client.connect(token);
     }

@@ -78,7 +78,7 @@ public class OutgoingCallActivity extends AppCompatActivity implements View.OnCl
 
         sensorManagerUtils = SensorManagerUtils.getInstance(this);
         sensorManagerUtils.acquireProximitySensor(getLocalClassName());
-        sensorManagerUtils.disableKeyguard();
+
 
         Common.isInCall = true;
 

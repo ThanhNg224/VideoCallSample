@@ -79,7 +79,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
 
         sensorManagerUtils = SensorManagerUtils.getInstance(this);
         sensorManagerUtils.acquireProximitySensor(getLocalClassName());
-        sensorManagerUtils.disableKeyguard();
+
 
         Common.isInCall = true;
 
@@ -130,6 +130,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
     }
 

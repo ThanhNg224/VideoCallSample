@@ -1,31 +1,29 @@
 package com.stringee.videocallsample;
 
-import android.app.KeyguardManager;
-import android.app.KeyguardManager.KeyguardLock;
+import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.os.PowerManager;
 
 public class SensorManagerUtils implements SensorEventListener {
+    @SuppressLint("StaticFieldLeak")
     private static SensorManagerUtils instance;
     private SensorManager mSensorManager;
-    private Sensor mProximity;
-    private PowerManager powerManager;
     private PowerManager.WakeLock wakeLock;
-    private KeyguardLock lock;
-    private Context context;
+
+    private final Context context;
 
     public static SensorManagerUtils getInstance(Context context) {
         if (instance == null) {
-            instance = new SensorManagerUtils(context);
+            instance = new SensorManagerUtils(context.getApplicationContext());
         }
         return instance;
     }
+
 
     public SensorManagerUtils(Context context) {
         this.context = context;
@@ -33,31 +31,20 @@ public class SensorManagerUtils implements SensorEventListener {
 
     public void acquireProximitySensor(String tag) {
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        Sensor mProximity = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
         mSensorManager.registerListener(this, mProximity, SensorManager.SENSOR_DELAY_NORMAL);
 
-        powerManager = ((PowerManager) context.getSystemService(Context.POWER_SERVICE));
+        PowerManager powerManager = ((PowerManager) context.getSystemService(Context.POWER_SERVICE));
 
         int screenLockValue;
 
-        if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
-            screenLockValue = PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK;
-        } else {
-            try {
-                screenLockValue = PowerManager.class.getField("PROXIMITY_SCREEN_OFF_WAKE_LOCK").getInt(null);
-            } catch (Exception exc) {
-                screenLockValue = 32; // default integer value of PROXIMITY_SCREEN_OFF_WAKE_LOCK
-            }
-        }
+        screenLockValue = PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK;
         wakeLock = powerManager.newWakeLock(screenLockValue, tag);
 
-        wakeLock.acquire();
+        wakeLock.acquire(10*60*1000L /*10 minutes*/);
     }
 
-    public void disableKeyguard() {
-        lock = ((KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE)).newKeyguardLock(Context.KEYGUARD_SERVICE);
-        lock.disableKeyguard();
-    }
+
 
     public void releaseSensor() {
         if (mSensorManager != null) {
@@ -70,10 +57,7 @@ public class SensorManagerUtils implements SensorEventListener {
             wakeLock = null;
         }
 
-        if (lock != null) {
-            lock.reenableKeyguard();
-            lock = null;
-        }
+
 
         if (instance != null) {
             instance = null;
@@ -85,7 +69,7 @@ public class SensorManagerUtils implements SensorEventListener {
         float value = sensorEvent.values[0];
         if (value == 0) {
             if (wakeLock != null && !wakeLock.isHeld()) {
-                wakeLock.acquire();
+                wakeLock.acquire(10*60*1000L /*10 minutes*/);
             }
         } else {
             if (wakeLock != null && wakeLock.isHeld()) {
