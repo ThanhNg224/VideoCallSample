@@ -1,6 +1,7 @@
 package com.stringee.videocallsample;
 
 import android.Manifest.permission;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build.VERSION;
@@ -36,7 +37,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SuppressLint("SetTextI18n")
 public class IncomingCallActivity extends AppCompatActivity implements View.OnClickListener {
     private FrameLayout vLocal;
     private FrameLayout vRemote;
@@ -61,6 +62,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
     private SignalingState mSignalingState;
 
     @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -128,11 +130,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
         startRinging();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
 
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -224,6 +222,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
                     dismissLayout();
                 });
             }
+
 
             @Override
             public void onHandledOnAnotherDevice(StringeeCall2 stringeeCall2, final SignalingState signalingState, String desc) {
@@ -364,6 +363,7 @@ public class IncomingCallActivity extends AppCompatActivity implements View.OnCl
             }
         }
     }
+
 
 
     private void endCall(boolean isHangup) {

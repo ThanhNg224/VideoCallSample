@@ -34,7 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@SuppressLint("SetTextI18n")
 public class OutgoingCallActivity extends AppCompatActivity implements View.OnClickListener {
     private StringeeClient client;
     private FrameLayout vLocal;
@@ -115,10 +115,6 @@ public class OutgoingCallActivity extends AppCompatActivity implements View.OnCl
         makeCall();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
 
     @Override

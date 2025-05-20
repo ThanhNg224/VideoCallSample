@@ -1,6 +1,6 @@
 package com.stringee.videocallsample;
 
-import android.app.ProgressDialog;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,13 +26,12 @@ import com.stringee.listener.StatusListener;
 import com.stringee.listener.StringeeConnectionListener;
 
 import org.json.JSONObject;
-
+@SuppressLint("SetTextI18n")
 public class MainActivity extends AppCompatActivity implements LifecycleObserver {
     private StringeeClient client;
 
     private String to;
 
-    private EditText etTo;
     private TextView tvUserId;
 
     private ActivityResultLauncher<Intent> launcher;
@@ -42,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvUserId = findViewById(R.id.tv_userid);
-        etTo = findViewById(R.id.et_to);
+        EditText etTo = findViewById(R.id.et_to);
 
         Button btnMakeCall = findViewById(R.id.btn_make_call);
         btnMakeCall.setOnClickListener(view -> {
@@ -154,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements LifecycleObserver
 
                 @Override
                 public void onRequestNewToken(StringeeClient stringeeClient) {
-                    // Get new token here and connect to Stringe server
+                    // Get new token here and connect to Stringee server
                     Log.d("Stringee", "Token expired. Request new token here");
                 }
 
